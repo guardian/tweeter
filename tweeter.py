@@ -1,10 +1,8 @@
-import urllib
-
-from flask import Flask
-
+import flask
 import shortcuts
 
-app = Flask(__name__)
+
+app = flask.Flask(__name__)
 
 
 @app.route("/")
@@ -16,7 +14,7 @@ def search(term):
     search_data = shortcuts.twitter_request(
         "https://api.twitter.com/1.1/search/tweets.json",
         {
-            "q": urllib.quote(term),
+            "q": term,
             "result_type": "mixed"
         }
     )
