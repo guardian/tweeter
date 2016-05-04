@@ -2,14 +2,14 @@ import flask
 import shortcuts
 
 
-app = flask.Flask(__name__)
+tweeter = flask.Flask("Tweeter")
 
 
-@app.route("/")
+@tweeter.route("/")
 def hello():
     return "hello"
 
-@app.route("/search/<term>")
+@tweeter.route("/search/<term>")
 def search(term):
     search_data = shortcuts.twitter_request(
         "https://api.twitter.com/1.1/search/tweets.json",
@@ -39,4 +39,4 @@ def search(term):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    tweeter.run(debug=True)
