@@ -1,6 +1,4 @@
-import json
 import urllib
-import urllib2
 
 from flask import Flask
 
@@ -15,14 +13,14 @@ def hello():
 
 @app.route("/search/<term>")
 def search(term):
-    url = "https://api.twitter.com/1.1/search/tweets.json?" + urllib.urlencode({
-        "q": urllib.quote(term),
-        "result_type": "mixed"
-    })
-    print(url)
-    search_req = shortcuts.new_authenticated_request(url)
-    search_response = urllib2.urlopen(search_req)
-    search_data = json.loads(search_response.read())
+    search_data = shortcuts.twitter_request(
+        "https://api.twitter.com/1.1/search/tweets.json?",
+        {
+            "q": urllib.quote(term),
+            "result_type": "mixed"
+        }
+    )
+        
 
     # Build HTML to return
     head_html = "<head><title>Search: " + term + "</title></head>"

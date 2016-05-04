@@ -72,3 +72,11 @@ def new_authenticated_request(url):
     request = urllib2.Request(url)
     request.add_header("Authorization", "Bearer " + get_access_token())
     return request
+
+
+def twitter_request(url, params):
+    full_url = "https://api.twitter.com/1.1/search/tweets.json?" + urllib.urlencode(params)
+    print(full_url)
+    search_req = new_authenticated_request(full_url)
+    search_response = urllib2.urlopen(search_req)
+    return json.loads(search_response.read())
