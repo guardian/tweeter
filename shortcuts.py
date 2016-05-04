@@ -62,21 +62,24 @@ def get_access_token():
     return access_token
 
 
-def new_authenticated_request(url):
-    '''Return a new Request object for the supplied url, authenticated with the
-    supplied access token.
+def twitter_request(url, params = None):
+    '''Make a request to a Twitter API URL and return the results.
 
-    Get an access token using the get_access_token function.
+    You supply parameters for the request using the params argument. Do not
+    include parameters in the url argument.
 
     '''
+    if params:
+        url += "?" + urllib.urlencode(params)
+
+    print("Making request to " + url)
+
+    # Form request
     request = urllib2.Request(url)
     request.add_header("Authorization", "Bearer " + get_access_token())
-    return request
 
+    # Make request
+    response = urllib2.urlopen(request)
 
-def twitter_request(url, params):
-    full_url = "https://api.twitter.com/1.1/search/tweets.json?" + urllib.urlencode(params)
-    print(full_url)
-    search_req = new_authenticated_request(full_url)
-    search_response = urllib2.urlopen(search_req)
-    return json.loads(search_response.read())
+    # Parse and return JSON response
+    return json.loads(response.read())

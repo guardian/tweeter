@@ -14,7 +14,7 @@ def hello():
 @app.route("/search/<term>")
 def search(term):
     search_data = shortcuts.twitter_request(
-        "https://api.twitter.com/1.1/search/tweets.json?",
+        "https://api.twitter.com/1.1/search/tweets.json",
         {
             "q": urllib.quote(term),
             "result_type": "mixed"
