@@ -83,3 +83,27 @@ def twitter_request(url, params = None):
 
     # Parse and return JSON response
     return json.loads(response.read())
+
+
+def twitter_search(term, limit = 0):
+    '''Make a request to the Twitter API search URL and return the results.
+
+    '''
+    # Always set the "q" (query) parameter
+    params = {
+        "q": term
+    }
+
+    # Also set the "count" (limit) parameter if it is provided by the user
+    # limit = 0, means that it will be 0 by default
+    if limit > 0:
+        params["count"] = limit
+
+    # Make the request using our own shortcut method
+    response = twitter_request(
+        "https://api.twitter.com/1.1/search/tweets.json",
+        params
+    )
+
+    # Return the results specifically
+    return response["statuses"]

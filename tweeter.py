@@ -11,21 +11,14 @@ def hello():
 
 @tweeter.route("/search/<term>")
 def search(term):
-    search_data = shortcuts.twitter_request(
-        "https://api.twitter.com/1.1/search/tweets.json",
-        {
-            "q": term,
-            "result_type": "mixed"
-        }
-    )
-        
+    results = shortcuts.twitter_search(term, 10)
 
     # Build HTML to return
     head_html = "<head><title>Search: " + term + "</title></head>"
 
     # Processing the tweets themselves
     tweet_html = "<ul>"
-    for tweet in search_data["statuses"]:
+    for tweet in results:
         tweet_html += "<li>" + tweet["text"] + "</li>"
     tweet_html += "</ul>"
 
