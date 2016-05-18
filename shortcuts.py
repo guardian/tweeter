@@ -85,13 +85,15 @@ def twitter_request(url, params = None):
     return json.loads(response.read())
 
 
-def twitter_search(term, limit = 0):
+def twitter_search(term, limit = 0, language = "en"):
     '''Make a request to the Twitter API search URL and return the results.
 
     '''
-    # Always set the "q" (query) parameter
+    # Always set the "q" (query) and language params, language has default
+    # "en" (English)
     params = {
-        "q": term
+        "q": term,
+        "lang": language
     }
 
     # Also set the "count" (limit) parameter if it is provided by the user

@@ -14,19 +14,20 @@ def search(term):
     results = shortcuts.twitter_search(term, 10)
 
     # Build HTML to return
-    head_html = "<head><title>Search: " + term + "</title></head>"
 
     # Processing the tweets themselves
-    tweet_html = "<ul>"
+    tweet_html = ""
     for tweet in results:
-        tweet_html += "<li>" + tweet["text"] + "</li>"
-    tweet_html += "</ul>"
+        tweet_html = tweet_html + "<p>" + tweet["text"] + "</p>"
 
-    # Wrapping up the tweet_html into a HTML body with a title
-    body_html = "<body><h1>Search: " + term + "</h1>" + tweet_html + "</body>"
+    # Make a HTML title containing the search term
+    title_html = "<h1>Tweets containing " + term + "</h1>"
 
-    # Join the head and body together
-    html = "<html>" + head_html + body_html + "</html>"
+    # Combine these to make the HTML "body"
+    body_html = "<body>" + title_html + tweet_html + "</body>"
+
+    # Wrap all this in html tags
+    html = "<html>" + body_html + "</html>"
         
     return html
 
